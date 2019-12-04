@@ -1,0 +1,95 @@
+#notes:
+#decrease monster hit points
+
+#############################################################################
+
+#SETUP
+from tkinter import ttk
+from tkinter import *
+import tkinter
+
+#############################################################################
+#CREATING THE WINDOW AND LABELS
+
+#create the window
+window=Tk()
+
+#create a monster name label and set the location
+input_name = Label(window, text='Name of Monster')
+input_name.place(x=25, y=25)
+#create a monster entry and set a border size
+entry_name = Entry(window, bd=5)
+entry_name.place(x=25, y=50)
+
+#create an XP label and set the location
+input_xp = Label(window, text='XP')
+input_xp.place(x=265, y=25)
+#create a monster entry and set a border size
+entry_health = Entry(window, bd=5)
+entry_health.place(x=265, y=50)
+
+#create a notes label and set the location
+input_notes = Label(window, text='Notes')
+input_notes.place(x=510, y=25)
+#create a monster entry and set a border size
+entry_notes = Entry(window, bd=5)
+entry_notes.place(x=510, y=50)
+
+#############################################################################
+#CREATE A CLASS FOR THE MONSTER ENTRY
+
+class Monster_entry:
+    def __init__(self, name, health, notes):
+        self.name = name
+        self.health = health
+        self.notes = notes
+
+#############################################################################
+#CREATE THE LIST OF MONSTER ENTRIES
+
+monster_entries = []
+#will append later on
+
+##############################################################################
+#THE ENTRY DISPLAY
+
+#create an entry display
+entry_display = Text(window)
+entry_display.place(x=320, y=100,width=200, height=120)
+
+#updating the entry display
+def entry_display_update():
+    entry_display.delete ('1.0', END)
+    for entry in monster_entries:
+        entry_display.insert(INSERT, entry.name + "\n")
+        entry_display.insert(INSERT, entry.health + "\n")
+        entry_display.insert(INSERT, entry.notes + "\n")
+
+#############################################################################
+#ADDING TO THE LIST OF MONSTER ENTRIES
+
+def new_entries():
+    print(entry_name.get())
+    new_name = entry_name.get()
+    new_health = entry_health.get()
+    new_notes = entry_notes.get()
+    monster_entries.append(Monster_entry(new_name, new_health, new_notes))
+    #appending the Address_entry with the new_name and new_number to the entries list.
+    #The print lines are checking to make sure the most recently added item has the name and number that we expected.
+    print(monster_entries[len(monster_entries) - 1].name)
+    print(monster_entries[len(monster_entries) - 1].health)
+    print(monster_entries[len(monster_entries) - 1].notes)
+    entry_display_update()
+#############################################################################
+#MAKING THE BUTTON
+
+entry_button = Button(window, text="Enter", command = new_entries)
+entry_button.place(x=25, y=100)
+
+
+#############################################################################
+#RUN THE CODE
+window.title('Monster Tracker')
+window.geometry("1000x800+10+10")
+#window.pack()
+window.mainloop()
